@@ -13,7 +13,10 @@ RUN \
     && homelab remove util-linux \
     && mkdir -p /privoxy \
     && cp -rf /etc/privoxy/* /privoxy/ \
-    && cp /usr/share/privoxy/config /privoxy/config \
+    && rm /privoxy/config \
+    && touch /privoxy/config \
+    && echo "confdir /privoxy" >> /privoxy/config \
+    && echo "listen-address  :8118" >> /privoxy/config \
     # Clean up. \
     && homelab cleanup
 
