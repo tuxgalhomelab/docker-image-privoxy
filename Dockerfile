@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-c"]
 ARG PACKAGES_TO_INSTALL
 
 RUN \
-    set -e -o pipefail \
+    set -E -e -o pipefail \
     # Install dependencies. \
     && homelab install util-linux ${PACKAGES_TO_INSTALL:?} \
     && homelab remove util-linux \
