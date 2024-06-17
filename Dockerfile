@@ -1,22 +1,45 @@
 ARG BASE_IMAGE_NAME
 ARG BASE_IMAGE_TAG
+FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS with-scripts
+
+COPY scripts/start-privoxy.sh /scripts/
+
+ARG BASE_IMAGE_NAME
+ARG BASE_IMAGE_TAG
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
 SHELL ["/bin/bash", "-c"]
 
 ARG PACKAGES_TO_INSTALL
+ARG USER_NAME
+ARG GROUP_NAME
+ARG USER_ID
+ARG GROUP_ID
 
-RUN \
+RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
     set -E -e -o pipefail \
     # Install dependencies. \
     && homelab install util-linux ${PACKAGES_TO_INSTALL:?} \
     && homelab remove util-linux \
-    && mkdir -p /privoxy \
+    && mkdir -p /privoxy /opt/privoxy \
     && cp -rf /etc/privoxy/* /privoxy/ \
     && rm /privoxy/config \
     && touch /privoxy/config \
     && echo "confdir /privoxy" >> /privoxy/config \
     && echo "listen-address  :8118" >> /privoxy/config \
+    # Copy the start-privoxy.sh script. \
+    && cp /scripts/start-privoxy.sh /opt/privoxy/ \
+    && ln -sf /opt/privoxy/start-privoxy.sh /opt/bin/start-privoxy \
+    # Remove the existing user to allow us to set the user ID. \
+    && userdel --force --remove privoxy \
+    # Create the user and the group. \
+    && homelab add-user \
+        ${USER_NAME:?} \
+        ${USER_ID:?} \
+        ${GROUP_NAME:?} \
+        ${GROUP_ID:?} \
+        --no-create-home-dir \
+    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /opt/privoxy /opt/bin/start-privoxy \
     # Clean up. \
     && homelab cleanup
 
@@ -24,4 +47,4 @@ RUN \
 EXPOSE 8118
 
 WORKDIR /
-CMD ["privoxy", "--no-daemon", "/privoxy/config"]
+CMD ["start-privoxy"]

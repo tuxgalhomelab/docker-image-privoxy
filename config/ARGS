@@ -1,2 +1,6 @@
 BASE_IMAGE_NAME=tuxdude/homelab-base
 BASE_IMAGE_TAG=master
+USER_NAME=privoxy
+GROUP_NAME=privoxy
+USER_ID=16014
+GROUP_ID=16014
