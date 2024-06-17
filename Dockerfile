@@ -21,12 +21,12 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
     # Install dependencies. \
     && homelab install util-linux ${PACKAGES_TO_INSTALL:?} \
     && homelab remove util-linux \
-    && mkdir -p /privoxy /opt/privoxy \
-    && cp -rf /etc/privoxy/* /privoxy/ \
-    && rm /privoxy/config \
-    && touch /privoxy/config \
-    && echo "confdir /privoxy" >> /privoxy/config \
-    && echo "listen-address  :8118" >> /privoxy/config \
+    && mkdir -p /data/privoxy /opt/privoxy \
+    && cp -rf /etc/privoxy/* /data/privoxy/ \
+    && rm /data/privoxy/config \
+    && touch /data/privoxy/config \
+    && echo "confdir /data/privoxy" >> /data/privoxy/config \
+    && echo "listen-address  :8118" >> /data/privoxy/config \
     # Copy the start-privoxy.sh script. \
     && cp /scripts/start-privoxy.sh /opt/privoxy/ \
     && ln -sf /opt/privoxy/start-privoxy.sh /opt/bin/start-privoxy \
@@ -39,7 +39,7 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
         ${GROUP_NAME:?} \
         ${GROUP_ID:?} \
         --no-create-home-dir \
-    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /opt/privoxy /opt/bin/start-privoxy \
+    && chown -R ${USER_NAME:?}:${GROUP_NAME:?} /opt/privoxy /opt/bin/start-privoxy /data/privoxy \
     # Clean up. \
     && homelab cleanup
 

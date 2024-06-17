@@ -11,7 +11,7 @@ start_privoxy() {
     echo "Starting Privoxy ..."
     echo
 
-    exec privoxy --no-daemon /privoxy/config
+    exec privoxy --no-daemon /data/privoxy/config
 }
 
 set_umask
