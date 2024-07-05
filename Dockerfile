@@ -47,4 +47,6 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
 EXPOSE 8118
 
 WORKDIR /
+
 CMD ["start-privoxy"]
+STOPSIGNAL SIGTERM
