@@ -20,6 +20,7 @@ ARG GROUP_ID
 
 RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     # Install dependencies. \
     && homelab install util-linux ${PACKAGES_TO_INSTALL:?} \
     && homelab remove util-linux \
