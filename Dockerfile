@@ -48,6 +48,16 @@ RUN --mount=type=bind,target=/scripts,from=with-scripts,source=/scripts \
 # Privoxy proxy.
 EXPOSE 8118
 
+HEALTHCHECK \
+    --start-period=15s --interval=30s --timeout=3s \
+    CMD curl \
+        --silent --fail --location --show-error \
+        --output /dev/null \
+        --write-out '%{http_code}' \
+        --head \
+        --proxy 127.0.0.1:8118 \
+        1.1.1.1
+
 WORKDIR /
 
 CMD ["start-privoxy"]
