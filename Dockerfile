@@ -58,6 +58,8 @@ HEALTHCHECK \
         --proxy 127.0.0.1:8118 \
         1.1.1.1
 
+ENV USER=${USER_NAME}
+USER ${USER_NAME}:${GROUP_NAME}
 WORKDIR /
 
 CMD ["start-privoxy"]
