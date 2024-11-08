@@ -1,5 +1,5 @@
-# Home Lab Privoxy Docker Image
+# Homelab Privoxy Docker Image
 
-[![Build](https://github.com/TuxdudeHomeLab/docker-image-privoxy/actions/workflows/build.yml/badge.svg)](https://github.com/TuxdudeHomeLab/docker-image-privoxy/actions/workflows/build.yml) [![Lint](https://github.com/TuxdudeHomeLab/docker-image-privoxy/actions/workflows/lint.yml/badge.svg)](https://github.com/TuxdudeHomeLab/docker-image-privoxy/actions/workflows/lint.yml)
+[![Build](https://github.com/tuxgalhomelab/docker-image-privoxy/actions/workflows/build.yml/badge.svg)](https://github.com/tuxgalhomelab/docker-image-privoxy/actions/workflows/build.yml) [![Lint](https://github.com/tuxgalhomelab/docker-image-privoxy/actions/workflows/lint.yml/badge.svg)](https://github.com/tuxgalhomelab/docker-image-privoxy/actions/workflows/lint.yml)
 
-The docker image used for running [`privoxy`](https://www.privoxy.org/) in Tuxdude's Home Lab setup.
+The docker image used for running [`privoxy`](https://www.privoxy.org/) in tuxgal's Homelab setup.
